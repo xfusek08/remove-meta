@@ -36,17 +36,32 @@ Now just open site and the given IP (http://172.18.0.2:3000).
 
 
 
-Develop locally with npm
+## Develop locally with npm
 
+### Installation
 1. get `npm`
 2. run
     ```shell
     npm install
     ```
+    
+### Development
 Run dev server:
 ```shell
 npm run start
 ```
+
+## Git develop rules
+Please try to avoid merge commits in master branch to keep it clean, use
+```
+git config pull.rebase true
+```
+setting to always rebase pulled changes.
+
+For more info see this if interested.
+
+https://barro.github.io/2016/02/a-succesful-git-branching-model-considered-harmful/
+
 
 # Authors
 * Petr Fusek - xfusek08@stud.fit.vutbr.cz
