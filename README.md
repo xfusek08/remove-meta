@@ -1,3 +1,57 @@
+# Image Metadata Remover
+
+## Develop with docker-compose:
+For  those who do not want any global npm installation on their computer.
+
+### Installation
+1. Install Docker:
+    * `docker` - https://docs.docker.com/get-docker/
+    * `docker-compose` - https://docs.docker.com/compose/install/
+2. Start container
+    ```shell
+    docker-compose up
+    ```
+3. Install packages
+    ```shell
+    docker exec -itu 1000:1000 remove-meta npm install
+    ```
+
+### Development
+Run dev server:
+```shell
+docker exec -itu 1000:1000 remove-meta npm run start
+```
+``` shell
+$ docker exec -itu 1000:1000 remove-meta npm run start
+You can now view app in the browser.
+
+  Local:            http://localhost:3000
+  On Your Network:  http://172.18.0.2:3000
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+
+```
+Now just open site and the given IP (http://172.18.0.2:3000).
+
+
+
+Develop locally with npm
+
+1. get `npm`
+2. run
+    ```shell
+    npm install
+    ```
+Run dev server:
+```shell
+npm run start
+```
+
+# Authors
+* Petr Fusek - xfusek08@stud.fit.vutbr.cz
+* ...
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
