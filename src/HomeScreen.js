@@ -1,12 +1,16 @@
-import { Link, Route, Routes } from "react-router-dom";
+import React from 'react';
+import { useEffect } from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
 import style from './HomeScreen.module.scss';
-import dropIcon from '../icons/drop.svg';
+import dropIcon from './icons/drop.svg';
+import { useFilePicker } from 'use-file-picker';
+import PropTypes from 'prop-types';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
     return (
         <div className={style.container}>
             <Routes>
-                <Route path="/"  element={<Intro />} />
+                <Route path="/"  element={<Intro {...props} />} />
                 <Route path="/*" element={<Text />} />
             </Routes>
             <div className={style.navbar}>
@@ -16,11 +20,27 @@ export default function HomeScreen() {
                 <Link to="/terms-conditions">Terms & Conditions</Link>
             </div>
         </div>
-        
     );
 }
+HomeScreen.propTypes = {
+    setFiles: PropTypes.func.isRequired,
+};
 
-function Intro() {
+
+function Intro(props) {
+    
+    const [openFileSelector, { filesContent }] = useFilePicker({
+        readAs: 'DataURL',
+        accept: 'image/*',
+        multiple: true,
+    });
+    
+    useEffect(() => {
+        if (filesContent.length) {
+            props.setFiles(filesContent);
+        }
+    }, [filesContent]);
+    
     return (
         <div className={style.content}>
             <div className="h1">View and remove any metadata from collection of images</div>
@@ -28,12 +48,17 @@ function Intro() {
                 <img className={style.icon} src={dropIcon} alt="drop icon"/>
                 <div><strong>Drag & drop</strong> files here</div>
                 <div>or</div>
-                <div className="button">Choose files</div>
+                <button className="button" onClick={() => openFileSelector()}>Choose files</button>
             </div>
-            <div className="h3">Data are edited locally. We <strong>won't</strong> upload anything to our servers!</div>
+            <div className="h3">
+                Data are edited locally. We <strong>won&apos;t</strong> upload anything to our servers!
+            </div>
         </div>
     );
 }
+Intro.propTypes = {
+    setFiles: PropTypes.func.isRequired,
+};
 
 function Text() {
     return (

@@ -1,0 +1,1 @@
+docker exec -itu 1000:1000 remove-meta $@
