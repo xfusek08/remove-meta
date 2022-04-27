@@ -5,7 +5,16 @@
         "dimensions": [
             300,
             500
-        ]
+        ],
+        "metadata": {
+            "parsed": {
+                "timeTaken": 1651051547,
+                "keywords": [
+                    "kitten"
+                ]
+            },
+            "raw": {}
+        }
     },
     {
         "content": "https://placekitten.com/200/400",
@@ -13,7 +22,16 @@
         "dimensions": [
             200,
             400
-        ]
+        ],
+        "metadata": {
+            "parsed": {
+                "timeTaken": 1651051547,
+                "keywords": [
+                    "kitten"
+                ]
+            },
+            "raw": {}
+        }
     },
     {
         "content": "https://placekitten.com/350/400",
@@ -21,15 +39,33 @@
         "dimensions": [
             350,
             400
-        ]
+        ],
+        "metadata": {
+            "parsed": {
+                "timeTaken": 1651051547,
+                "keywords": [
+                    "kitten"
+                ]
+            },
+            "raw": {}
+        }
     },
     {
         "content": "https://placekitten.com/500/650",
         "name": "image 4.jpg",
         "dimensions": [
-            500,
-            650
-        ]
+            350,
+            400
+        ],
+        "metadata": {
+            "parsed": {
+                "timeTaken": 1651051547,
+                "keywords": [
+                    "kitten"
+                ]
+            },
+            "raw": {}
+        }
     },
     {
         "content": "https://placekitten.com/200/300",
@@ -37,7 +73,16 @@
         "dimensions": [
             200,
             300
-        ]
+        ],
+        "metadata": {
+            "parsed": {
+                "timeTaken": 1651051547,
+                "keywords": [
+                    "kitten"
+                ]
+            },
+            "raw": {}
+        }
     },
     {
         "content": "https://placekitten.com/300/200",
@@ -45,6 +90,15 @@
         "dimensions": [
             300,
             200
-        ]
+        ],
+        "metadata": {
+            "parsed": {
+                "timeTaken": 1651051547,
+                "keywords": [
+                    "kitten"
+                ]
+            },
+            "raw": {}
+        }
     }
 ]

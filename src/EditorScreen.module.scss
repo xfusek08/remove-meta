@@ -27,20 +27,3 @@
     height: 100%;
     overflow: hidden;
 }
-
-.scroll {
-    background: #ECECEC;
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-}
-
-.gallery {
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: flex-start;
-}

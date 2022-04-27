@@ -5,6 +5,9 @@ import style from './HomeScreen.module.scss';
 import dropIcon from './icons/drop.svg';
 import { useFilePicker } from 'use-file-picker';
 import PropTypes from 'prop-types';
+import dummy_data from './data/dummy_image_data';
+import log from 'loglevel';
+import ParsedImage from './data/ParsedImage';
 
 export default function HomeScreen(props) {
     return (
@@ -41,6 +44,9 @@ function Intro(props) {
         }
     }, [filesContent]);
     
+    // mocked uploading of actual image data
+    const openDummyData = () => props.setFiles(dummy_data.map((d) => new ParsedImage(d)));
+    
     return (
         <div className={style.content}>
             <div className="h1">View and remove any metadata from collection of images</div>
@@ -48,7 +54,13 @@ function Intro(props) {
                 <img className={style.icon} src={dropIcon} alt="drop icon"/>
                 <div><strong>Drag & drop</strong> files here</div>
                 <div>or</div>
-                <button className="button" onClick={() => openFileSelector()}>Choose files</button>
+                <button
+                    className="button"
+                    // onClick={() => openFileSelector()}
+                    onClick={() => openDummyData()}
+                >
+                    Choose files
+                </button>
             </div>
             <div className="h3">
                 Data are edited locally. We <strong>won&apos;t</strong> upload anything to our servers!

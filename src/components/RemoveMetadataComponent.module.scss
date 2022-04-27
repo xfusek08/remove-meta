@@ -1,0 +1,20 @@
+@import '../scss/typography.scss';
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.icon {
+    margin: 10px;
+    height: 25px;
+    img {
+        height: 100%;
+    }
+}

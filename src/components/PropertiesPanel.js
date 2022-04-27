@@ -1,10 +1,18 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import style from './PropertiesPanel.module.scss';
 import log from 'loglevel';
 import { Resizable } from 're-resizable';
+import { useEffect } from 'react';
+import { AggregatedMetadata } from '../data/ParsedImage';
+import RemoveMetadataComponent from './RemoveMetadataComponent';
 
-export default function PropertiesPanel() {
+export default function PropertiesPanel(props) {
+    
+    useEffect(() => {
+        log.info({ aggregatedMetadata: props.aggregatedMetadata });
+    }, []);
+    
     return (
         <Resizable
             className={style.propertiesPanel}
@@ -16,7 +24,7 @@ export default function PropertiesPanel() {
             maxWidth="50%"
             enable={{
                 top: false,
-                right: true,
+                right: false,
                 bottom: false,
                 left: true,
                 topRight: false,
@@ -26,6 +34,14 @@ export default function PropertiesPanel() {
             }}
         >
             <div className={style.list}>
+                {Object.entries(props.aggregatedMetadata.data).map(([typeName, value]) =>
+                    <RemoveMetadataComponent
+                        key={typeName}
+                        typeName={typeName}
+                        total={props.aggregatedMetadata.total}
+                        value={value}
+                    />
+                )}
             </div>
             
             {/* TODO: render table here */}
@@ -42,4 +58,5 @@ export default function PropertiesPanel() {
     );
 }
 PropertiesPanel.propTypes = {
+    aggregatedMetadata: PropTypes.instanceOf(AggregatedMetadata).isRequired,
 };

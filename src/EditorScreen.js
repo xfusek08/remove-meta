@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import style from './EditorScreen.module.scss';
 import log from 'loglevel';
-import GalleryItem from './components/GalleryItem';
 import PropertiesPanel from './components/PropertiesPanel';
+import ParsedImage, { AggregatedMetadata } from './data/ParsedImage';
+import Gallery from './components/Gallery';
 
 export default function EditorScreen(props) {
     const navigate = useNavigate();
@@ -33,24 +34,14 @@ export default function EditorScreen(props) {
             </div>
             
             <div className={style.body}>
-                
-                {/* Image Gallery */}
-                <div className={style.scroll}>
-                    <div className={style.gallery}>
-                        {props.files.map((file, index) => (
-                            <GalleryItem key={index} file={file} />
-                        ))}
-                    </div>
-                </div>
-                
-                <PropertiesPanel />
+                <Gallery files={props.files} />
+                <PropertiesPanel
+                    aggregatedMetadata={new AggregatedMetadata(props.files.map((p) => p.metadata))}
+                />
             </div>
-            
-            
         </div>
     );
 }
-
 EditorScreen.propTypes = {
-    files: PropTypes.array,
+    files: PropTypes.arrayOf(ParsedImage),
 };
