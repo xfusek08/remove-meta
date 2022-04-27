@@ -22,6 +22,11 @@ a {
     color: $accent-color;
 }
 
+h1,h2,h3 {
+    margin: 0;
+    padding: 0;
+}
+
 .h1, h1 { font-size: $h1-font-size; }
 .h2, h2 { font-size: $h2-font-size; }
 .h3, h3 { font-size: $h3-font-size; }
@@ -33,4 +38,10 @@ a {
     padding: 15px 20px;
     text-align: center;
     border: none;
+    
+    &.big {
+        font-size: $h3-font-size;
+        font-weight: bold;
+        white-space: nowrap;
+    }
 }

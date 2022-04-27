@@ -1,0 +1,50 @@
+[
+    {
+        "content": "https://placekitten.com/300/500",
+        "name": "image 1.jpg",
+        "dimensions": [
+            300,
+            500
+        ]
+    },
+    {
+        "content": "https://placekitten.com/200/400",
+        "name": "image 2.jpg",
+        "dimensions": [
+            200,
+            400
+        ]
+    },
+    {
+        "content": "https://placekitten.com/350/400",
+        "name": "image 3.jpg",
+        "dimensions": [
+            350,
+            400
+        ]
+    },
+    {
+        "content": "https://placekitten.com/500/650",
+        "name": "image 4.jpg",
+        "dimensions": [
+            500,
+            650
+        ]
+    },
+    {
+        "content": "https://placekitten.com/200/300",
+        "name": "image 5.jpg",
+        "dimensions": [
+            200,
+            300
+        ]
+    },
+    {
+        "content": "https://placekitten.com/300/200",
+        "name": "image 6.jpg",
+        "dimensions": [
+            300,
+            200
+        ]
+    }
+]

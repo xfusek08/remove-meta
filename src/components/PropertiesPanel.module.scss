@@ -1,0 +1,11 @@
+@import '../scss/typography.scss';
+
+.propertiesPanel {
+    display: flex;
+    flex-direction: column;
+    border-left: $panel-border;
+}
+
+.list {
+    height: 100%;
+}

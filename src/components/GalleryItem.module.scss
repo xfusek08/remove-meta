@@ -1,0 +1,43 @@
+.galleryItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+        
+    .image {
+        background: #848484;
+        box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+        
+        width: 150px;
+        height: 200px;
+        margin: 10px;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    
+    .text {
+        opacity: 0.4;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        .name {
+            font-size: 17px;
+        }
+        .dimensions {
+            font-size: 14px;
+        }
+    }
+}
