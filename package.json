@@ -14,7 +14,7 @@
         "sass": "^1.51.0",
         "use-file-picker": "^1.4.2"
     },
-    "homepage": "https://xfusek08.github.io/remove-meta-web/",
+    "homepage": "https://xfusek08.github.io/remove-meta",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",

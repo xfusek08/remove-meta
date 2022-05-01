@@ -1,13 +1,13 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import style from './HomeScreen.module.scss';
 import dropIcon from './icons/drop.svg';
 import { useFilePicker } from 'use-file-picker';
 import PropTypes from 'prop-types';
 import dummy_data from './data/dummy_image_data';
-import log from 'loglevel';
 import ParsedImage from './data/ParsedImage';
+import log from 'loglevel';
 
 export default function HomeScreen(props) {
     return (
@@ -73,6 +73,21 @@ Intro.propTypes = {
 };
 
 function Text() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    
+    useEffect(() => {
+        const allowedLocations = [
+            'contact',
+            'about',
+            'privacy-policy',
+            'terms-conditions',
+        ];
+        if (!allowedLocations.includes(location.pathname.split('/').pop())) {
+            navigate('/');
+        }
+    }, [location]);
+
     return (
         <div className={style.textContent}>
             <div className={style.backBar}>
