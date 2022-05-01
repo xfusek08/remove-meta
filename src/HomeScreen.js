@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import dummy_data from './data/dummy_image_data';
 import ParsedImage from './data/ParsedImage';
 import log from 'loglevel';
+import indexFileList from './data/indexFileList';
 
 export default function HomeScreen(props) {
     return (
@@ -40,23 +41,13 @@ function Intro(props) {
     
     useEffect(() => {
         if (filesContent.length) {
-            const a = filesContent.reduce((set, file) => {
-                const parsedImage = new ParsedImage(file);
-                set[parsedImage.id] = parsedImage;
-                return set;
-            }, {});
-            log.info({ a });
-            props.setFiles(a);
+            // TODO: parse uploaded files
         }
     }, [filesContent]);
     
     // mocked uploading of actual image data
     const openDummyData = () => props.setFiles(
-        dummy_data.reduce((set, file) => {
-            const parsedImage = new ParsedImage(file);
-            set[parsedImage.id] = parsedImage;
-            return set;
-        }, {})
+        indexFileList(dummy_data.map((f) => new ParsedImage(f)))
     );
     
     return (

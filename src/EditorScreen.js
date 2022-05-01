@@ -10,6 +10,7 @@ import ReactTooltip from 'react-tooltip';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AggregatedMetadata } from './data/ParsedImage';
+import indexFileList from './data/indexFileList';
 
 export default function EditorScreen(props) {
     const navigate = useNavigate();
@@ -25,6 +26,8 @@ export default function EditorScreen(props) {
             navigate('/');
         }
     }, [files]);
+    
+    const setFileList = (fileList) => setFiles(indexFileList(fileList));
     
     return (
         <>
@@ -47,36 +50,38 @@ export default function EditorScreen(props) {
                         value={{
                             ...defaultFileContext,
                             files: fileList,
-                            deleteAllMetadata: () => setFiles(fileList.map((f) => {
+                            deleteAllMetadata: () => setFileList(fileList.map((f) => {
                                 f.metadata.deleteAll();
                                 return f;
                             })),
-                            deleteAllMetadataOfKey: (key) => setFiles(fileList.map((f) => {
+                            deleteAllMetadataOfKey: (key) => setFileList(fileList.map((f) => {
                                 f.metadata.deleteKey(key);
                                 return f;
                             })),
-                            restoreAllMetadataOfKey: (key) => setFiles(fileList.map((f) => {
+                            restoreAllMetadataOfKey: (key) => setFileList(fileList.map((f) => {
                                 f.metadata.restoreKey(key);
                                 return f;
                             })),
-                            deleteAllKeywords: () => setFiles(fileList.map((f) => {
+                            deleteAllKeywords: () => setFileList(fileList.map((f) => {
                                 f.metadata.deleteAllKeywords();
                                 return f;
                             })),
-                            restoreAllKeywords: () => setFiles(fileList.map((f) => {
+                            restoreAllKeywords: () => setFileList(fileList.map((f) => {
                                 f.metadata.restoreAllKeywords();
                                 return f;
                             })),
-                            deleteKeyWord: (word) => setFiles(fileList.map((f) => {
+                            deleteKeyWord: (word) => setFileList(fileList.map((f) => {
                                 f.metadata.deleteKeyword(word);
                                 return f;
                             })),
-                            restoreKeyWord: (word) => setFiles(fileList.map((f) => {
+                            restoreKeyWord: (word) => setFileList(fileList.map((f) => {
                                 f.metadata.restoreKeyWord(word);
                                 return f;
                             })),
                             removeFile: (id) => {
+                                log.info(`removeFile ${id}`, files);
                                 if (id in files) {
+                                    log.info('removeFile 2');
                                     const deletedFile = files[id];
                                     setFiles({...files, [id]: undefined});
                                     toast.info(({ closeToast }) => (
