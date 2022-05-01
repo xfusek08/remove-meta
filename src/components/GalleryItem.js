@@ -1,13 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import style from './GalleryItem.module.scss';
 import ParsedImage from '../data/ParsedImage';
 import classNames from 'classnames';
+import FileContext from '../FileContext';
+import deleteIcon from '../icons/blue_cross.svg';
 
 export default function GalleryItem(props) {
     const deletedCount = props.file.metadata.getDeletedCount();
+    const context = useContext(FileContext);
     return (
-        <div className={style.galleryItem}>
+        <div
+            className={style.galleryItem}
+        >
+            <div
+                className={style.deleteButton}
+                onClick={() => context.removeFile(props.file.id)}
+                data-tip="Remove this image"
+            >
+                <img src={deleteIcon}></img>
+            </div>
             <div className={style.image}>
                 <img alt={props.file.fileName} src={props.file.urlData}></img>
             </div>

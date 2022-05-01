@@ -1,35 +1,17 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import timeIcon from '../icons/time.svg';
-import keywordsIcon from '../icons/keywordsIcon.svg';
-import geolocationIcon from '../icons/geolocation.svg';
 import style from './RemoveMetadataComponent.module.scss';
 import Buble from './Buble';
 import FileContext from '../FileContext';
-
-const metadataTypeDefinitions = {
-    timeTaken: {
-        label: 'Created Time',
-        icon: timeIcon,
-    },
-    geolocation:{
-        label: 'Geolocation',
-        icon: geolocationIcon,
-    },
-    keywords:{
-        label: 'Keywords',
-        icon: keywordsIcon,
-        specialComponent: DeleteKeywordsComponent
-    }
-};
+import { MetadataTypeDefinitions } from '../MetadataTypeDefinitions';
 
 export default function RemoveMetadataComponent(props) {
     let label = props.typeName;
     let icon = null;
     let Component = null;
     
-    if (props.typeName in metadataTypeDefinitions) {
-        const definition = metadataTypeDefinitions[props.typeName];
+    if (props.typeName in MetadataTypeDefinitions) {
+        const definition = MetadataTypeDefinitions[props.typeName];
         Component = definition.specialComponent ?? RenderGeneralDeleteMetadataComponent;
         icon = definition.icon;
         label = definition.label;
@@ -110,7 +92,7 @@ export function DeleteKeywordsComponent(props) {
                 <div className={style.info}>
                     {props.icon &&
                         <div className={style.icon}>
-                            <img src={keywordsIcon}/>
+                            <img src={props.icon}/>
                         </div>
                     }
                     <div className={style.label}>Keywords</div>

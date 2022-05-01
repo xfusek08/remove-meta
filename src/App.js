@@ -6,7 +6,7 @@ import HomeScreen from './HomeScreen';
 
 export default function App() {
     
-    const [uploadedFiles, setUploadedFiles] = useState([]);
+    const [uploadedFiles, setUploadedFiles] = useState({});
     const navigate = useNavigate();
     
     const setFiles = (files) => {

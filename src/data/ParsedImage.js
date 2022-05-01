@@ -3,15 +3,18 @@
  * rawData format is the dummy data for now and it will be changed to actual image uploaded data structure
  */
 
-import log from 'loglevel';
+import ShortUniqueId from 'short-unique-id';
+import { MetadataTypeDefinitions } from '../MetadataTypeDefinitions';
 
+const uid = new ShortUniqueId({ length: 10 });
+ 
 export default function ParsedImage(rawData) {
+    this.id = uid();
     this.urlData = rawData.content;
     this.fileName = rawData.name ?? 'unknown name';
     this.dimensions = rawData.dimensions ?? [-1, -1];
     this.metadata = new Metadata(rawData);
 }
-
 
 export function Metadata(rawData) {
     const rawMetadata = {}; // TODO: load actual all metadata contained in image data
@@ -105,5 +108,20 @@ export function AggregatedMetadata(metadataArray) {
     );
     
     this.total = metadataArray.length;
-    this.data = data;
+    this.data = Object.keys(data)
+        .sort((k1, k2) => {
+            const k1Display = MetadataTypeDefinitions[k1]?.label ?? k1;
+            const k2Display = MetadataTypeDefinitions[k2]?.label ?? k2;
+            if (k1Display < k2Display) {
+                return -1;
+            }
+            if (k1Display > k2Display) {
+                return 1;
+            }
+            return 0;
+        })
+        .reduce((obj, key) => {
+            obj[key] = data[key];
+            return obj;
+        }, {});
 }

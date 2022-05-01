@@ -8,8 +8,8 @@ export default function Gallery(props) {
     return (
         <div className={style.scroll}>
             <div className={style.gallery}>
-                {props.files.map((file, index) => (
-                    <GalleryItem key={index} file={file} />
+                {props.files.map((file) => (
+                    <GalleryItem key={file.id} file={file} />
                 ))}
             </div>
         </div>

@@ -40,12 +40,24 @@ function Intro(props) {
     
     useEffect(() => {
         if (filesContent.length) {
-            props.setFiles(filesContent);
+            const a = filesContent.reduce((set, file) => {
+                const parsedImage = new ParsedImage(file);
+                set[parsedImage.id] = parsedImage;
+                return set;
+            }, {});
+            log.info({ a });
+            props.setFiles(a);
         }
     }, [filesContent]);
     
     // mocked uploading of actual image data
-    const openDummyData = () => props.setFiles(dummy_data.map((d) => new ParsedImage(d)));
+    const openDummyData = () => props.setFiles(
+        dummy_data.reduce((set, file) => {
+            const parsedImage = new ParsedImage(file);
+            set[parsedImage.id] = parsedImage;
+            return set;
+        }, {})
+    );
     
     return (
         <div className={style.content}>
