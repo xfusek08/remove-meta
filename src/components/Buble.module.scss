@@ -1,0 +1,43 @@
+@import '../scss/typography.scss';
+
+.buble {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3px 7px;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    border-radius: 25px;
+    &>* {
+        margin: 0 3px;
+    }
+    font-size: 18px;
+    
+    transition: all 300ms;
+    &.red {
+        background: rgba(239, 106, 106, 0.19);
+        border: 1px solid #EF6A6A;
+        text-decoration: line-through;
+        color: #EF6A6A;
+    }
+}
+
+.iconButton {
+    display: flex;
+    background: transparent;
+    border: none;
+    padding: 0;
+    transition: all 300ms;
+    img {
+        height: 100%;
+    }
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+    }
+}
+
+.hidden {
+    display: none;
+}

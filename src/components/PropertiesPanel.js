@@ -1,17 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import style from './PropertiesPanel.module.scss';
-import log from 'loglevel';
 import { Resizable } from 're-resizable';
-import { useEffect } from 'react';
 import { AggregatedMetadata } from '../data/ParsedImage';
 import RemoveMetadataComponent from './RemoveMetadataComponent';
+import FileContext from '../FileContext';
 
 export default function PropertiesPanel(props) {
     
-    useEffect(() => {
-        log.info({ aggregatedMetadata: props.aggregatedMetadata });
-    }, []);
+    const context = useContext(FileContext);
     
     return (
         <Resizable
@@ -48,9 +45,7 @@ export default function PropertiesPanel(props) {
             
             <button
                 className="button big"
-                onClick={() => {
-                    log.info('Delete all metadata');
-                }}
+                onClick={context.deleteAllMetadata}
             >
                 Delete all metadata
             </button>

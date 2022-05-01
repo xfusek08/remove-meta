@@ -3,18 +3,44 @@
 .container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-bottom: 1.5px solid #D8D8D8;
 }
 
 .info {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    
+    .label {
+        padding-left: 5px;
+    }
 }
 
 .icon {
-    margin: 10px;
     height: 25px;
     img {
         height: 100%;
+    }
+}
+
+.keywords {
+    border-bottom: 1.5px solid #D8D8D8;
+    .container {
+        border: none;
+    }
+    
+    .bubbles {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 5px;
+        
+        & > * {
+            margin: 5px;
+        }
     }
 }
