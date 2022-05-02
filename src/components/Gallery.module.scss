@@ -1,5 +1,4 @@
 .gallery {
-    
     padding: 10px;
     display: flex;
     flex-direction: row;
@@ -14,4 +13,8 @@
     height: 100%;
     width: 100%;
     overflow: auto;
+}
+
+.infoBar {
+    padding: 10px;
 }

@@ -83,7 +83,14 @@ export function Metadata(rawData) {
  * NOTE: aggregation of parsed data only for now
  */
 export function AggregatedMetadata(fileArray) {
+    this.totalPieces = 0;
+    this.totalPiecesDeleted = 0;
+    
     const data = {};
+    const countInPiece = (deleted) => {
+        this.totalPieces++;
+        this.totalPiecesDeleted += deleted ? 1 : 0;
+    };
     
     if (fileArray.length === 1) {
         // single file aggregation
@@ -93,37 +100,49 @@ export function AggregatedMetadata(fileArray) {
             switch (name) {
             case 'keywords':
                 data[name] = {
-                    keywords: value.map((kw) => ({
-                        word: kw,
-                        isDeleted: metadata.isKeywordDeleted(kw),
-                    })),
+                    keywords: value.map((kw) => {
+                        const deleted = metadata.isKeywordDeleted(kw);
+                        countInPiece(deleted);
+                        return ({
+                            word: kw,
+                            isDeleted: deleted,
+                        });
+                    }),
                     id: file.id,
                 };
                 break;
             case 'geolocation':
-                data[name] = {
-                    content: formatcoords(...value).format(),
-                    isDeleted: metadata.isDeleted(name),
-                    id: file.id,
-                };
-                break;
-            case 'timeTaken':
                 {
-                    const dt = new Date(value);
+                    const deleted = metadata.isDeleted(name);
+                    countInPiece(deleted);
                     data[name] = {
-                        content: `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`,
-                        isDeleted: metadata.isDeleted(name),
+                        content: formatcoords(...value).format(),
+                        isDeleted: deleted,
                         id: file.id,
                     };
                 }
                 break;
-            default:
+            case 'timeTaken':
+                {
+                    const dt = new Date(value);
+                    const deleted = metadata.isDeleted(name);
+                    countInPiece(deleted);
+                    data[name] = {
+                        content: `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`,
+                        isDeleted: deleted,
+                        id: file.id,
+                    };
+                }
+                break;
+            default: {
+                const deleted = metadata.isDeleted(name);
+                countInPiece(deleted);
                 data[name] = {
                     content: value,
-                    isDeleted: metadata.isDeleted(name),
+                    isDeleted: deleted,
                     id: file.id,
                 };
-            }
+            }}
         });
     } else if (fileArray.length > 1) {
         const joinIds = (ids, id) => {
@@ -142,8 +161,10 @@ export function AggregatedMetadata(fileArray) {
                     {
                         const keywords = data[name]?.keywords ?? {};
                         value.forEach((keyword) => {
+                            const deleted = file.metadata.isKeywordDeleted(keyword);
+                            countInPiece(deleted);
                             keywords[keyword] = {
-                                deleted: (keywords[keyword]?.deleted ?? 0) + (file.metadata.isKeywordDeleted(keyword) ? 1 : 0),
+                                deleted: (keywords[keyword]?.deleted ?? 0) + (deleted ? 1 : 0),
                                 ids: joinIds(keywords[keyword]?.ids, file.id),
                             };
                         });
@@ -153,12 +174,14 @@ export function AggregatedMetadata(fileArray) {
                         };
                     }
                     break;
-                default:
+                default: {
+                    const deleted = file.metadata.isDeleted(name) ;
+                    countInPiece(deleted);
                     data[name] = {
-                        deleted: (data[name]?.deleted ?? 0) + (file.metadata.isDeleted(name) ? 1 : 0),
+                        deleted: (data[name]?.deleted ?? 0) + (deleted ? 1 : 0),
                         ids: joinIds(data[name]?.ids, file.id),
                     };
-                }
+                }}
             })
         );
     }

@@ -29,7 +29,8 @@ export default function EditorScreen(props) {
     }, [files]);
     
     const setFileList = (fileList) => setFiles(indexFileList(fileList));
-    
+    const aggregation = new AggregatedMetadata(fileList);
+    const singleFileAggregation = selectedFile ? new AggregatedMetadata([selectedFile]) : null;
     return (
         <>
             <div className={style.container}>
@@ -84,6 +85,9 @@ export default function EditorScreen(props) {
                                 if (id in files) {
                                     const deletedFile = files[id];
                                     setFiles({...files, [id]: undefined});
+                                    if (selectedFile?.id === id) {
+                                        setSelectedFile(null);
+                                    }
                                     toast.info(({ closeToast }) => (
                                         <div className={style.undoNotification}>
                                             <span>File <strong>{deletedFile.fileName}</strong> was removed.</span>
@@ -124,11 +128,6 @@ export default function EditorScreen(props) {
                             })),
                             deleteKeywordForFile: (fileId, word) => setFileList(fileList.map((f) => {
                                 if (f.id === fileId) {
-                                    log.info({
-                                        fileId,
-                                        f,
-                                        word
-                                    });
                                     f.metadata.deleteKeyword(word);
                                 }
                                 return f;
@@ -141,10 +140,17 @@ export default function EditorScreen(props) {
                             })),
                         }}
                     >
-                        <Gallery files={fileList} />
-                        <PropertiesPanel
-                            aggregatedMetadata={new AggregatedMetadata(selectedFile ? [selectedFile] : fileList)}
+                        <Gallery
+                            files={fileList}
+                            infoBarContent={
+                                <div className={style.info}>
+                                    <span className={style.big}><span className={style.red}><strong>{aggregation.totalPiecesDeleted}</strong></span></span> of <span className={style.big}><strong>{aggregation.totalPieces}</strong></span>
+                                    sensitive pieces of data will be deleted from
+                                    <span className={style.big}><strong>{fileList.length}</strong></span> images.
+                                </div>
+                            }
                         />
+                        <PropertiesPanel aggregation={singleFileAggregation ?? aggregation} />
                     </FileContext.Provider>
                 </div>
             </div>

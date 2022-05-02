@@ -37,11 +37,11 @@ export default function PropertiesPanel(props) {
                 </div>
             }
             <div className={style.list}>
-                {Object.entries(props.aggregatedMetadata.data).map(([typeName, value]) =>
+                {Object.entries(props.aggregation.data).map(([typeName, value]) =>
                     <RemoveMetadataComponent
                         key={typeName}
                         typeName={typeName}
-                        total={props.aggregatedMetadata.total}
+                        total={props.aggregation.total}
                         value={value}
                     />
                 )}
@@ -59,5 +59,5 @@ export default function PropertiesPanel(props) {
     );
 }
 PropertiesPanel.propTypes = {
-    aggregatedMetadata: PropTypes.instanceOf(AggregatedMetadata).isRequired,
+    aggregation: PropTypes.instanceOf(AggregatedMetadata).isRequired,
 };

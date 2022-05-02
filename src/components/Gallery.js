@@ -9,6 +9,11 @@ export default function Gallery(props) {
     const context = useContext(FileContext);
     return (
         <div className={style.scroll}>
+            {!!props.infoBarContent &&
+                <div className={style.infoBar}>
+                    {props.infoBarContent}
+                </div>
+            }
             <div
                 className={style.gallery}
                 onClick={() => context.selectSingleFile(null)}
@@ -22,4 +27,5 @@ export default function Gallery(props) {
 }
 Gallery.propTypes = {
     files: PropTypes.arrayOf(ParsedImage).isRequired, // result of to_image function with standardized interface
+    infoBarContent: PropTypes.any,
 };
