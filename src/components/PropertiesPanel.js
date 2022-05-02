@@ -5,6 +5,7 @@ import { Resizable } from 're-resizable';
 import { AggregatedMetadata } from '../data/ParsedImage';
 import RemoveMetadataComponent from './RemoveMetadataComponent';
 import FileContext from '../FileContext';
+import InfoText from './InfoText';
 
 export default function PropertiesPanel(props) {
     
@@ -34,7 +35,11 @@ export default function PropertiesPanel(props) {
                 {context.selectedFile &&
                     <div className={style.focusedObjectHeader}>
                         Selected image: <br />
-                        <strong>{context.selectedFile.fileName}</strong>
+                        <span className={style.fileName}>{context.selectedFile.fileName}</span>
+                        <InfoText className={style.info}>
+                            <InfoText.Emph big red>{props.aggregation.totalPiecesDeleted}</InfoText.Emph> of <InfoText.Emph big>{props.aggregation.totalPieces}</InfoText.Emph>
+                            pieces of data to be removed
+                        </InfoText>
                     </div>
                 }
                 {Object.entries(props.aggregation.data).map(([typeName, value]) =>

@@ -49,20 +49,6 @@
     }
 }
 
-.red {
-    color: #DA2A2A
-}
-
 .info {
-    display: flex;
-    align-items: center;
     opacity: 0.6;
-    flex-direction: row;
-    flex-wrap: wrap;
-    font-size: 17px;
-    .big {
-        padding: 0 5px;
-        font-size: 18px;
-    }
-    padding: 5px;
 }

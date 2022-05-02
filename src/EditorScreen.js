@@ -11,6 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AggregatedMetadata } from './data/ParsedImage';
 import indexFileList from './data/indexFileList';
+import InfoText from './components/InfoText';
 
 export default function EditorScreen(props) {
     const navigate = useNavigate();
@@ -143,11 +144,11 @@ export default function EditorScreen(props) {
                         <Gallery
                             files={fileList}
                             infoBarContent={
-                                <div className={style.info}>
-                                    <span className={style.big}><span className={style.red}><strong>{aggregation.totalPiecesDeleted}</strong></span></span> of <span className={style.big}><strong>{aggregation.totalPieces}</strong></span>
-                                    sensitive pieces of data will be deleted from
-                                    <span className={style.big}><strong>{fileList.length}</strong></span> images.
-                                </div>
+                                <InfoText className={style.info}>
+                                    In total
+                                    <InfoText.Emph big red>{aggregation.totalPiecesDeleted}</InfoText.Emph> of <InfoText.Emph big>{aggregation.totalPieces}</InfoText.Emph>
+                                    sensitive pieces of data to be removed from <InfoText.Emph big>{fileList.length}</InfoText.Emph> images.
+                                </InfoText>
                             }
                         />
                         <PropertiesPanel aggregation={singleFileAggregation ?? aggregation} />

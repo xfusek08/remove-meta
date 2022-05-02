@@ -1,0 +1,19 @@
+@import '../scss/typography.scss';
+
+.info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    &>* {
+        padding: 0 5px;
+    }
+    font-size: 0.9rem;
+    .big {
+        font-size: 1rem;
+    }
+    .red {
+        color: #DA2A2A
+    }
+    padding: 5px;
+}

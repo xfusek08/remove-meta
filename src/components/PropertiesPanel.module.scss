@@ -18,7 +18,8 @@
     align-items: center;
     padding: 15px;
     
-    strong {
+    .fileName {
         font-size: $h3-font-size;
+        font-weight: bold;
     }
 }
