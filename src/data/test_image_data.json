@@ -8,7 +8,12 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 911691051546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "geolocation": [
                     20.961626,
                     5.2883
@@ -20,7 +25,8 @@
                     "Happy"
                 ]
             },
-            "raw": {}
+            "raw": {
+            }
         }
     },
     {
@@ -32,7 +38,12 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 1211691051546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "geolocation": [
                     4.961626,
                     800.2883
@@ -56,7 +67,12 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 1311694051546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "geolocation": [
                     497.961626,
                     58.2883
@@ -78,7 +94,11 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 1711697051546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
                 "geolocation": [
                     18885.961626,
                     0.2883
@@ -101,7 +121,12 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 1221671781546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "geolocation": [
                     0,
                     0
@@ -119,7 +144,12 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 1811621051546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "geolocation": [
                     48.961626,
                     77.2883
@@ -143,6 +173,10 @@
         "metadata": {
             "parsed": {
                 "timeTaken": 2011691781546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "geolocation": [
                     234.961626,
                     85.2883
@@ -166,7 +200,12 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 2211691381546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "geolocation": [
                     332.961626,
                     333.2883
@@ -189,6 +228,10 @@
         "metadata": {
             "parsed": {
                 "timeTaken": 2411191781546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "geolocation": [
                     255.961626,
                     75.2883
@@ -212,7 +255,12 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 2711691281546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "geolocation": [
                     98.961626,
                     155.2883
@@ -234,6 +282,7 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 2911691481546,
                 "geolocation": [
                     789.961626,
@@ -280,6 +329,7 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "keywords": [
                     "Mountain",
                     "Desert",
@@ -298,7 +348,12 @@
         ],
         "metadata": {
             "parsed": {
+                "Author": "Pep",
                 "timeTaken": 3221671341546,
+                "CameraModel": "Canon EOS 90D",
+                "CameraMaker": "Canon",
+                "CameraSerialNumber": 111222985,
+                "ExposureTime": "1/1000 seconds",
                 "keywords": [
                     "Desert",
                     "Sky",
