@@ -4,7 +4,6 @@
  */
 
 import formatcoords from 'formatcoords';
-import log from 'loglevel';
 import ShortUniqueId from 'short-unique-id';
 import { MetadataTypeDefinitions } from '../MetadataTypeDefinitions';
 
@@ -20,7 +19,7 @@ export default function ParsedImage(rawData) {
 
 export function Metadata(rawData) {
     const rawMetadata = {}; // TODO: load actual all metadata contained in image data
-
+    
     this.parsed = rawData.metadata.parsed; // TODO: process raw metadata and extract those known to the application
     this.raw = rawMetadata;
     this.deleted = [];

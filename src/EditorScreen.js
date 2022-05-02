@@ -17,10 +17,13 @@ export default function EditorScreen(props) {
     const navigate = useNavigate();
     const [files, setFiles] = useState(props.files);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [highlightedIds, setHighlightedIds] = useState([]);
     const fileList = Object.values(files).filter((f) => !!f);
     
     const filesRef = useRef();
     filesRef.current = files;
+    
+    const highlightTimer = useRef();
     
     // redirect to home screen when no files are loaded
     useEffect(() => {
@@ -54,6 +57,7 @@ export default function EditorScreen(props) {
                             ...defaultFileContext,
                             files,
                             selectedFile,
+                            highlightedIds,
                             deleteAllMetadata: () => setFileList(fileList.map((f) => {
                                 f.metadata.deleteAll();
                                 return f;
@@ -139,6 +143,14 @@ export default function EditorScreen(props) {
                                 }
                                 return f;
                             })),
+                            highlightIds: (ids) => {
+                                clearTimeout(highlightTimer.current);
+                                highlightTimer.current = setTimeout(() => setHighlightedIds(ids), 300);
+                            },
+                            removeHighlights: () => {
+                                clearTimeout(highlightTimer.current);
+                                highlightTimer.current = setTimeout(() => setHighlightedIds([]), 300);
+                            },
                         }}
                     >
                         <Gallery

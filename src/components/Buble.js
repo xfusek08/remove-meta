@@ -8,6 +8,8 @@ import classNames from 'classnames';
 export default function Buble(props) {
     return (
         <div
+            onMouseEnter={props.onMouseEnter}
+            onMouseLeave={props.onMouseLeave}
             className={classNames(
                 style.buble,
                 { [style.red]: !!props.onRestore }
@@ -33,4 +35,6 @@ Buble.propTypes = {
     text: PropTypes.string.isRequired,
     onDelete: PropTypes.func,
     onRestore: PropTypes.func,
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
 };

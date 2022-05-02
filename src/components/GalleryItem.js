@@ -10,11 +10,15 @@ export default function GalleryItem(props) {
     const deletedCount = props.file.metadata.getDeletedCount();
     const context = useContext(FileContext);
     const isSelected = context.selectedFile?.id === props.file.id;
+    
     return (
         <div
             className={classNames(
                 style.galleryItem,
-                { [style.selected]: isSelected }
+                {
+                    [style.selected]: isSelected,
+                    [style.highlighted]: context.highlightedIds.includes(props.file.id),
+                }
             )}
             onClick={(e) => {
                 e.stopPropagation();
@@ -23,8 +27,11 @@ export default function GalleryItem(props) {
         >
             <div
                 className={style.deleteButton}
-                onClick={() => context.removeFile(props.file.id)}
-                data-tip="Remove this image"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    context.removeFile(props.file.id);
+                }}
+                // data-tip="Remove this image"
             >
                 <img src={deleteIcon}></img>
             </div>

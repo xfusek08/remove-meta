@@ -10,17 +10,25 @@
     box-sizing: border-box;
     border-radius: 25px;
     margin: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    
     &>* {
         margin: 0 3px;
     }
-    font-size: 15px;
     
-    transition: all 300ms;
     &.red {
         background: rgba(239, 106, 106, 0.19);
         border: 1px solid #EF6A6A;
         text-decoration: line-through;
         color: #EF6A6A;
+        &:hover {
+            box-shadow: #EF6A6A70 0px 2px 4px 0px, #EF6A6A70 0px 0px 0px 1px;
+        }
+    }
+    
+    &:hover:not(&.red) {
+        box-shadow: #63c7ff70 0px 2px 4px 0px, #63c7ff70 0px 0px 0px 1px;
     }
 }
 

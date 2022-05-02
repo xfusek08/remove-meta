@@ -40,13 +40,14 @@ export function RenderGeneralDeleteMetadataComponent(props) {
     
     const context = useContext(FileContext);
     
-    const [text, onDelete, onRestore] = (() => {
+    const [text, onDelete, onRestore, hoverIds] = (() => {
         if (props.total === 1) {
             const deleted = props.value.isDeleted;
             return [
                 props.value.content,
                 !deleted ? () => context.deleteMetadataKeyForFile(props.value.id, props.typeName) : null,
                 deleted ? () => context.restoreMetadataKeyForFile(props.value.id, props.typeName) : null,
+                [props.value.id],
             ];
         }
         const count = props.value.ids.length;
@@ -55,6 +56,7 @@ export function RenderGeneralDeleteMetadataComponent(props) {
             props.total === count ? `all ${props.total}` : `${count} of ${props.total}`,
             !deleted ? () => context.deleteAllMetadataOfKey(props.typeName) : null,
             deleted ? () => context.restoreAllMetadataOfKey(props.typeName) : null,
+            props.value.ids
         ];
     })();
     
@@ -73,6 +75,8 @@ export function RenderGeneralDeleteMetadataComponent(props) {
                     text={text}
                     onDelete={onDelete}
                     onRestore={onRestore}
+                    onMouseEnter={() => context.highlightIds(hoverIds)}
+                    onMouseLeave={() => context.removeHighlights()}
                 />
             </div>
         </div>
@@ -89,7 +93,7 @@ RenderGeneralDeleteMetadataComponent.propTypes = {
 export function DeleteKeywordsComponent(props) {
     const context = useContext(FileContext);
     
-    const [total, onDeleteAll, onRestoreAll] = (() => {
+    const [total, onDeleteAll, onRestoreAll, hoverIds] = (() => {
         if (props.total === 1) {
             const deleted = Object.values(props.value.keywords)
                 .map((v) => v.isDeleted)
@@ -98,6 +102,7 @@ export function DeleteKeywordsComponent(props) {
                 props.value.keywords.length,
                 !deleted ? () => context.deleteAllKeywordsForFile(props.value.id) : null,
                 deleted ? () => context.restoreAllKeywordsForFile(props.value.id) : null,
+                [props.value.id],
             ];
         }
         
@@ -113,6 +118,7 @@ export function DeleteKeywordsComponent(props) {
             total,
             !deleted ? () => context.deleteAllKeywords() : null,
             deleted ? () => context.restoreAllKeywords() : null,
+            props.value.ids,
         ];
     })();
     
@@ -132,18 +138,21 @@ export function DeleteKeywordsComponent(props) {
                         text={`${total} in total`}
                         onDelete={onDeleteAll}
                         onRestore={onRestoreAll}
+                        onMouseEnter={() => context.highlightIds(hoverIds)}
+                        onMouseLeave={() => context.removeHighlights()}
                     />
                 </div>
             </div>
             <div className={style.bubbles}>
                 {Object.entries(props.value.keywords).map(([word, value]) => {
                     
-                    const [text, onDelete, onRestore] = (() =>  {
+                    const [text, onDelete, onRestore, hoverIdsInner] = (() =>  {
                         if (props.total === 1) {
                             return [
                                 value.word,
                                 !value.isDeleted ? () => context.deleteKeywordForFile(props.value.id, value.word) : null,
                                 value.isDeleted ? () => context.restoreKeywordForFile(props.value.id, value.word) : null,
+                                hoverIds,
                             ];
                         }
                         const deleted = value.deleted === value.ids.length;
@@ -151,6 +160,7 @@ export function DeleteKeywordsComponent(props) {
                             `${value.ids.length} | ${word}`,
                             !deleted ? () => context.deleteKeyword(word) : null,
                             deleted ? () => context.restoreKeyword(word) : null,
+                            value.ids
                         ];
                     })();
                     
@@ -160,6 +170,8 @@ export function DeleteKeywordsComponent(props) {
                             text={text}
                             onDelete={onDelete}
                             onRestore={onRestore}
+                            onMouseEnter={() => context.highlightIds(hoverIdsInner)}
+                            onMouseLeave={() => context.removeHighlights()}
                         />
                     );
                 })}

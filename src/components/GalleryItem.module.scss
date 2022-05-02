@@ -13,8 +13,17 @@
             outline: 4px solid $accent-color;
         }
     }
-        
+    
+    &.highlighted:not(&.selected) {
+        .image {
+            box-shadow: 5px 5px 5px #63c7ff9e;
+            outline: 2px solid  $accent-color;
+            transform: scale(1.03);
+        }
+    }
+    
     .image {
+        transition: box-shadow 300ms, transform 300ms, outline 100ms;
         background: #848484;
         box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
         border-radius: 8px;
