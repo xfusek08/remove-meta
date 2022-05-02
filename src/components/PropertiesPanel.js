@@ -19,7 +19,7 @@ export default function PropertiesPanel(props) {
                 infoText: (
                     <InfoText className={style.info}>
                         <InfoText.Emph big red>{props.aggregation.totalPiecesDeleted}</InfoText.Emph> of <InfoText.Emph big>{props.aggregation.totalPieces}</InfoText.Emph>
-                        pieces of data to be removed
+                        pieces of data will be removed.
                     </InfoText>
                 ),
             });

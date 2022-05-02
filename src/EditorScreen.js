@@ -159,7 +159,7 @@ export default function EditorScreen(props) {
                                 <InfoText className={style.info}>
                                     In total
                                     <InfoText.Emph big red>{aggregation.totalPiecesDeleted}</InfoText.Emph> of <InfoText.Emph big>{aggregation.totalPieces}</InfoText.Emph>
-                                    sensitive pieces of data to be removed from <InfoText.Emph big>{fileList.length}</InfoText.Emph> images.
+                                    sensitive pieces of data will be removed from <InfoText.Emph big>{fileList.length}</InfoText.Emph> images.
                                 </InfoText>
                             }
                         />
