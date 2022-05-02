@@ -34,7 +34,6 @@ export default function PropertiesPanel(props) {
             <div className={style.list}>
                 {context.selectedFile &&
                     <div className={style.focusedObjectHeader}>
-                        Selected image: <br />
                         <span className={style.fileName}>{context.selectedFile.fileName}</span>
                         <InfoText className={style.info}>
                             <InfoText.Emph big red>{props.aggregation.totalPiecesDeleted}</InfoText.Emph> of <InfoText.Emph big>{props.aggregation.totalPieces}</InfoText.Emph>
