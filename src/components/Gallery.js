@@ -8,16 +8,16 @@ import FileContext from '../FileContext';
 export default function Gallery(props) {
     const context = useContext(FileContext);
     return (
-        <div className={style.scroll}>
+        <div
+            className={style.scroll}
+            onClick={() => context.selectSingleFile(null)}
+        >
             {!!props.infoBarContent &&
                 <div className={style.infoBar}>
                     {props.infoBarContent}
                 </div>
             }
-            <div
-                className={style.gallery}
-                onClick={() => context.selectSingleFile(null)}
-            >
+            <div className={style.gallery}>
                 {props.files.map((file) => (
                     <GalleryItem key={file.id} file={file} />
                 ))}

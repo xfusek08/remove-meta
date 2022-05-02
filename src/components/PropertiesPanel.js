@@ -30,13 +30,13 @@ export default function PropertiesPanel(props) {
                 topLeft: false
             }}
         >
-            {context.selectedFile &&
-                <div className={style.focusedObjectHeader}>
-                    Selected image: <br />
-                    <strong>{context.selectedFile.fileName}</strong>
-                </div>
-            }
             <div className={style.list}>
+                {context.selectedFile &&
+                    <div className={style.focusedObjectHeader}>
+                        Selected image: <br />
+                        <strong>{context.selectedFile.fileName}</strong>
+                    </div>
+                }
                 {Object.entries(props.aggregation.data).map(([typeName, value]) =>
                     <RemoveMetadataComponent
                         key={typeName}
