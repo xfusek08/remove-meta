@@ -17,5 +17,17 @@ export const MetadataTypeDefinitions = {
         label: 'Keywords',
         icon: keywordsIcon,
         specialComponent: DeleteKeywordsComponent
-    }
+    },
+    CameraModel: {
+        label: 'Camera Model'
+    },
+    CameraMaker: {
+        label: 'Camera Maker'
+    },
+    CameraSerialNumber: {
+        label: 'Camera Serial Number'
+    },
+    ExposureTime: {
+        label: 'Exposure Time'
+    },
 };

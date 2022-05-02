@@ -5,7 +5,7 @@ import style from './HomeScreen.module.scss';
 import dropIcon from './icons/drop.svg';
 import { useFilePicker } from 'use-file-picker';
 import PropTypes from 'prop-types';
-import dummy_data from './data/dummy_image_data';
+import dummy_data from './data/test_image_data.json';
 import ParsedImage from './data/ParsedImage';
 import log from 'loglevel';
 import indexFileList from './data/indexFileList';
