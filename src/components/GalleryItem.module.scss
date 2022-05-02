@@ -1,3 +1,5 @@
+@import '../scss/typography.scss';
+
 .galleryItem {
     display: flex;
     flex-direction: column;
@@ -5,6 +7,12 @@
     align-items: center;
     position: relative;
     cursor: pointer;
+    
+    &.selected {
+        .image {
+            outline: 4px solid $accent-color;
+        }
+    }
         
     .image {
         background: #848484;

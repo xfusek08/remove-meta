@@ -15,6 +15,7 @@ import indexFileList from './data/indexFileList';
 export default function EditorScreen(props) {
     const navigate = useNavigate();
     const [files, setFiles] = useState(props.files);
+    const [selectedFile, setSelectedFile] = useState(null);
     const fileList = Object.values(files).filter((f) => !!f);
     
     const filesRef = useRef();
@@ -49,7 +50,8 @@ export default function EditorScreen(props) {
                     <FileContext.Provider
                         value={{
                             ...defaultFileContext,
-                            files: fileList,
+                            files,
+                            selectedFile,
                             deleteAllMetadata: () => setFileList(fileList.map((f) => {
                                 f.metadata.deleteAll();
                                 return f;
@@ -70,18 +72,16 @@ export default function EditorScreen(props) {
                                 f.metadata.restoreAllKeywords();
                                 return f;
                             })),
-                            deleteKeyWord: (word) => setFileList(fileList.map((f) => {
+                            deleteKeyword: (word) => setFileList(fileList.map((f) => {
                                 f.metadata.deleteKeyword(word);
                                 return f;
                             })),
-                            restoreKeyWord: (word) => setFileList(fileList.map((f) => {
-                                f.metadata.restoreKeyWord(word);
+                            restoreKeyword: (word) => setFileList(fileList.map((f) => {
+                                f.metadata.restoreKeyword(word);
                                 return f;
                             })),
                             removeFile: (id) => {
-                                log.info(`removeFile ${id}`, files);
                                 if (id in files) {
-                                    log.info('removeFile 2');
                                     const deletedFile = files[id];
                                     setFiles({...files, [id]: undefined});
                                     toast.info(({ closeToast }) => (
@@ -95,11 +95,55 @@ export default function EditorScreen(props) {
                                     ));
                                 }
                             },
+                            selectSingleFile: (file) => {
+                                setSelectedFile(file);
+                            },
+                            deleteMetadataKeyForFile: (fileId, key) => setFileList(fileList.map((f) => {
+                                if (f.id === fileId) {
+                                    f.metadata.deleteKey(key);
+                                }
+                                return f;
+                            })),
+                            restoreMetadataKeyForFile: (fileId, key) => setFileList(fileList.map((f) => {
+                                if (f.id === fileId) {
+                                    f.metadata.restoreKey(key);
+                                }
+                                return f;
+                            })),
+                            deleteAllKeywordsForFile: (fileId) => setFileList(fileList.map((f) => {
+                                if (f.id === fileId) {
+                                    f.metadata.deleteAllKeywords();
+                                }
+                                return f;
+                            })),
+                            restoreAllKeywordsForFile: (fileId) => setFileList(fileList.map((f) => {
+                                if (f.id === fileId) {
+                                    f.metadata.restoreAllKeywords();
+                                }
+                                return f;
+                            })),
+                            deleteKeywordForFile: (fileId, word) => setFileList(fileList.map((f) => {
+                                if (f.id === fileId) {
+                                    log.info({
+                                        fileId,
+                                        f,
+                                        word
+                                    });
+                                    f.metadata.deleteKeyword(word);
+                                }
+                                return f;
+                            })),
+                            restoreKeywordForFile: (fileId, word) => setFileList(fileList.map((f) => {
+                                if (f.id === fileId) {
+                                    f.metadata.restoreKeyword(word);
+                                }
+                                return f;
+                            })),
                         }}
                     >
                         <Gallery files={fileList} />
                         <PropertiesPanel
-                            aggregatedMetadata={new AggregatedMetadata(fileList.map((p) => p.metadata))}
+                            aggregatedMetadata={new AggregatedMetadata(selectedFile ? [selectedFile] : fileList)}
                         />
                     </FileContext.Provider>
                 </div>

@@ -9,9 +9,17 @@ import deleteIcon from '../icons/blue_cross.svg';
 export default function GalleryItem(props) {
     const deletedCount = props.file.metadata.getDeletedCount();
     const context = useContext(FileContext);
+    const isSelected = context.selectedFile?.id === props.file.id;
     return (
         <div
-            className={style.galleryItem}
+            className={classNames(
+                style.galleryItem,
+                { [style.selected]: isSelected }
+            )}
+            onClick={(e) => {
+                e.stopPropagation();
+                context.selectSingleFile(!isSelected ? props.file : null);
+            }}
         >
             <div
                 className={style.deleteButton}

@@ -9,3 +9,15 @@
 .list {
     height: 100%;
 }
+
+.focusedObjectHeader {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 15px;
+    
+    strong {
+        font-size: $h3-font-size;
+    }
+}

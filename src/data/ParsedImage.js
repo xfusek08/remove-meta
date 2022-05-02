@@ -3,6 +3,8 @@
  * rawData format is the dummy data for now and it will be changed to actual image uploaded data structure
  */
 
+import formatcoords from 'formatcoords';
+import log from 'loglevel';
 import ShortUniqueId from 'short-unique-id';
 import { MetadataTypeDefinitions } from '../MetadataTypeDefinitions';
 
@@ -64,7 +66,7 @@ export function Metadata(rawData) {
         }
     };
     
-    this.restoreKeyWord = (keyword) => {
+    this.restoreKeyword = (keyword) => {
         if (this.parsed.keywords && this.parsed.keywords.includes(keyword)) {
             this.deletedKeywords = this.deletedKeywords.filter((i) => i != keyword);
         }
@@ -72,7 +74,7 @@ export function Metadata(rawData) {
     
     this.isDeleted = (key) => this.deleted.includes(key);
     
-    this.isKeywordDeleted = (keyWord) => this.deletedKeywords.includes(keyWord);
+    this.isKeywordDeleted = (keyword) => this.deletedKeywords.includes(keyword);
 }
 
 /**
@@ -80,34 +82,88 @@ export function Metadata(rawData) {
  *
  * NOTE: aggregation of parsed data only for now
  */
-export function AggregatedMetadata(metadataArray) {
-    
+export function AggregatedMetadata(fileArray) {
     const data = {};
-    metadataArray.forEach((metadata) => Object.entries(metadata.parsed)
-        .forEach(([name, value]) => {
+    
+    if (fileArray.length === 1) {
+        // single file aggregation
+        const file = fileArray[0];
+        const metadata = file.metadata;
+        Object.entries(metadata.parsed).forEach(([name, value]) => {
             switch (name) {
             case 'keywords':
+                data[name] = {
+                    keywords: value.map((kw) => ({
+                        word: kw,
+                        isDeleted: metadata.isKeywordDeleted(kw),
+                    })),
+                    id: file.id,
+                };
+                break;
+            case 'geolocation':
+                data[name] = {
+                    content: formatcoords(...value).format(),
+                    isDeleted: metadata.isDeleted(name),
+                    id: file.id,
+                };
+                break;
+            case 'timeTaken':
                 {
-                    const aggregation = data[name] ?? {};
-                    value.forEach((keyWord) => {
-                        aggregation[keyWord] = {
-                            count: (aggregation[keyWord]?.count ?? 0) + 1,
-                            deleted: (aggregation[keyWord]?.deleted ?? 0) + (metadata.isKeywordDeleted(keyWord) ? 1 : 0),
-                        };
-                    });
-                    data[name] = aggregation;
+                    const dt = new Date(value);
+                    data[name] = {
+                        content: `${dt.toLocaleDateString()} ${dt.toLocaleTimeString()}`,
+                        isDeleted: metadata.isDeleted(name),
+                        id: file.id,
+                    };
                 }
                 break;
             default:
                 data[name] = {
-                    count: (data[name]?.count ?? 0) + 1,
-                    deleted: (data[name]?.deleted ?? 0) + (metadata.isDeleted(name) ? 1 : 0),
+                    content: value,
+                    isDeleted: metadata.isDeleted(name),
+                    id: file.id,
                 };
             }
-        })
-    );
+        });
+    } else if (fileArray.length > 1) {
+        const joinIds = (ids, id) => {
+            if (ids) {
+                ids.push(id);
+                return ids.filter((x, pos) => ids.indexOf(x) === pos);
+            }
+            return [id];
+        };
+        
+        // multiple files aggregation
+        fileArray.forEach((file) => Object.entries(file.metadata.parsed)
+            .forEach(([name, value]) => {
+                switch (name) {
+                case 'keywords':
+                    {
+                        const keywords = data[name]?.keywords ?? {};
+                        value.forEach((keyword) => {
+                            keywords[keyword] = {
+                                deleted: (keywords[keyword]?.deleted ?? 0) + (file.metadata.isKeywordDeleted(keyword) ? 1 : 0),
+                                ids: joinIds(keywords[keyword]?.ids, file.id),
+                            };
+                        });
+                        data[name] = {
+                            keywords,
+                            ids: joinIds(data[name]?.ids, file.id),
+                        };
+                    }
+                    break;
+                default:
+                    data[name] = {
+                        deleted: (data[name]?.deleted ?? 0) + (file.metadata.isDeleted(name) ? 1 : 0),
+                        ids: joinIds(data[name]?.ids, file.id),
+                    };
+                }
+            })
+        );
+    }
     
-    this.total = metadataArray.length;
+    this.total = fileArray.length;
     this.data = Object.keys(data)
         .sort((k1, k2) => {
             const k1Display = MetadataTypeDefinitions[k1]?.label ?? k1;

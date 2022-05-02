@@ -4,6 +4,7 @@ import style from './RemoveMetadataComponent.module.scss';
 import Buble from './Buble';
 import FileContext from '../FileContext';
 import { MetadataTypeDefinitions } from '../MetadataTypeDefinitions';
+import log from 'loglevel';
 
 export default function RemoveMetadataComponent(props) {
     let label = props.typeName;
@@ -35,16 +36,27 @@ RemoveMetadataComponent.propTypes = {
     value: PropTypes.any,
 };
 
-
 export function RenderGeneralDeleteMetadataComponent(props) {
     
     const context = useContext(FileContext);
     
-    const text = props.total === props.value.count
-        ? `all ${props.total}`
-        : `${props.value.count} of ${props.total}`;
-    
-    const isRestore = props.value.deleted === props.value.count;
+    const [text, onDelete, onRestore] = (() => {
+        if (props.total === 1) {
+            const deleted = props.value.isDeleted;
+            return [
+                props.value.content,
+                !deleted ? () => context.deleteMetadataKeyForFile(props.value.id, props.typeName) : null,
+                deleted ? () => context.restoreMetadataKeyForFile(props.value.id, props.typeName) : null,
+            ];
+        }
+        const count = props.value.ids.length;
+        const deleted = props.value.deleted === count;
+        return [
+            props.total === count ? `all ${props.total}` : `${count} of ${props.total}`,
+            !deleted ? () => context.deleteAllMetadataOfKey(props.typeName) : null,
+            deleted ? () => context.restoreAllMetadataOfKey(props.typeName) : null,
+        ];
+    })();
     
     return (
         <div className={style.container}>
@@ -59,8 +71,8 @@ export function RenderGeneralDeleteMetadataComponent(props) {
             <div className={style.bubbles}>
                 <Buble
                     text={text}
-                    onDelete={!isRestore ? () => context.deleteAllMetadataOfKey(props.typeName) : null}
-                    onRestore={isRestore ? () => context.restoreAllMetadataOfKey(props.typeName) : null}
+                    onDelete={onDelete}
+                    onRestore={onRestore}
                 />
             </div>
         </div>
@@ -77,14 +89,32 @@ RenderGeneralDeleteMetadataComponent.propTypes = {
 export function DeleteKeywordsComponent(props) {
     const context = useContext(FileContext);
     
-    let total = 0;
-    let totalDeleted = 0;
-    Object.values(props.value).forEach((v) => {
-        total += v.count;
-        totalDeleted += v.deleted;
-    });
-    
-    const isTotalRestore = total === totalDeleted;
+    const [total, onDeleteAll, onRestoreAll] = (() => {
+        if (props.total === 1) {
+            const deleted = Object.values(props.value.keywords)
+                .map((v) => v.isDeleted)
+                .every((b) => b);
+            return [
+                props.value.keywords.length,
+                !deleted ? () => context.deleteAllKeywordsForFile(props.value.id) : null,
+                deleted ? () => context.restoreAllKeywordsForFile(props.value.id) : null,
+            ];
+        }
+        
+        // keywords aggregation data
+        let total = 0;
+        let totalDeleted = 0;
+        Object.values(props.value.keywords).forEach((v) => {
+            total += v.ids.length;
+            totalDeleted += v.deleted;
+        });
+        const deleted = totalDeleted === total;
+        return [
+            total,
+            !deleted ? () => context.deleteAllKeywords() : null,
+            deleted ? () => context.restoreAllKeywords() : null,
+        ];
+    })();
     
     return (
         <div className={style.keywords}>
@@ -100,21 +130,36 @@ export function DeleteKeywordsComponent(props) {
                 <div>
                     <Buble
                         text={`${total} in total`}
-                        onDelete={!isTotalRestore ? () => context.deleteAllKeywords() : null}
-                        onRestore={isTotalRestore ? () => context.restoreAllKeywords() : null}
+                        onDelete={onDeleteAll}
+                        onRestore={onRestoreAll}
                     />
                 </div>
             </div>
             <div className={style.bubbles}>
-                {Object.entries(props.value).map(([word, value]) => {
-                    const text = `${value.count} | ${word}`;
-                    const isRestore = value.deleted == value.count;
+                {Object.entries(props.value.keywords).map(([word, value]) => {
+                    
+                    const [text, onDelete, onRestore] = (() =>  {
+                        if (props.total === 1) {
+                            return [
+                                value.word,
+                                !value.isDeleted ? () => context.deleteKeywordForFile(props.value.id, value.word) : null,
+                                value.isDeleted ? () => context.restoreKeywordForFile(props.value.id, value.word) : null,
+                            ];
+                        }
+                        const deleted = value.deleted === value.ids.length;
+                        return [
+                            `${value.ids.length} | ${word}`,
+                            !deleted ? () => context.deleteKeyword(word) : null,
+                            deleted ? () => context.restoreKeyword(word) : null,
+                        ];
+                    })();
+                    
                     return (
                         <Buble
                             key={word}
                             text={text}
-                            onDelete={!isRestore ? () => context.deleteKeyWord(word) : null}
-                            onRestore={isRestore ? () => context.restoreKeyWord(word) : null}
+                            onDelete={onDelete}
+                            onRestore={onRestore}
                         />
                     );
                 })}
@@ -125,5 +170,6 @@ export function DeleteKeywordsComponent(props) {
 DeleteKeywordsComponent.propTypes = {
     icon: PropTypes.string, // TODO: icon component?
     label: PropTypes.string.isRequired,
+    total: PropTypes.number.isRequired,
     value: PropTypes.object.isRequired,
 };
