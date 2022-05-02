@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import style from './PropertiesPanel.module.scss';
 import { Resizable } from 're-resizable';
@@ -6,10 +6,29 @@ import { AggregatedMetadata } from '../data/ParsedImage';
 import RemoveMetadataComponent from './RemoveMetadataComponent';
 import FileContext from '../FileContext';
 import InfoText from './InfoText';
+import AnimateHeight from 'react-animate-height';
 
 export default function PropertiesPanel(props) {
-    
     const context = useContext(FileContext);
+    const [headerData, setHeaderData] = useState({fileName: null, infoText: null});
+    
+    useEffect(() => {
+        if (context.selectedFile) {
+            setHeaderData({
+                fileName: context.selectedFile?.fileName,
+                infoText: (
+                    <InfoText className={style.info}>
+                        <InfoText.Emph big red>{props.aggregation.totalPiecesDeleted}</InfoText.Emph> of <InfoText.Emph big>{props.aggregation.totalPieces}</InfoText.Emph>
+                        pieces of data to be removed
+                    </InfoText>
+                ),
+            });
+        }
+    }, [
+        context.selectedFile?.fileName,
+        props.aggregation.totalPiecesDeleted,
+        props.aggregation.totalPieces
+    ]);
     
     return (
         <Resizable
@@ -31,16 +50,18 @@ export default function PropertiesPanel(props) {
                 topLeft: false
             }}
         >
+            <AnimateHeight
+                className={style.headerShadow}
+                style={{flexShrink: 0}}
+                duration={ 500 }
+                height={ headerData.fileName && context.selectedFile ?  'auto' : 0 }
+            >
+                <div className={style.focusedObjectHeader}>
+                    <span className={style.fileName}>{headerData.fileName}</span>
+                    {headerData.infoText}
+                </div>
+            </AnimateHeight>
             <div className={style.list}>
-                {context.selectedFile &&
-                    <div className={style.focusedObjectHeader}>
-                        <span className={style.fileName}>{context.selectedFile.fileName}</span>
-                        <InfoText className={style.info}>
-                            <InfoText.Emph big red>{props.aggregation.totalPiecesDeleted}</InfoText.Emph> of <InfoText.Emph big>{props.aggregation.totalPieces}</InfoText.Emph>
-                            pieces of data to be removed
-                        </InfoText>
-                    </div>
-                }
                 {Object.entries(props.aggregation.data).map(([typeName, value]) =>
                     <RemoveMetadataComponent
                         key={typeName}

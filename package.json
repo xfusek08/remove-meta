@@ -9,6 +9,7 @@
         "loglevel": "^1.8.0",
         "re-resizable": "^6.9.9",
         "react": "^18.0.0",
+        "react-animate-height": "^2.1.2",
         "react-dom": "^18.0.0",
         "react-router-dom": "^6.3.0",
         "react-scripts": "^5.0.1",

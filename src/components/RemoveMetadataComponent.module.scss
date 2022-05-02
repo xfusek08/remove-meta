@@ -4,9 +4,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 10px;
+    padding: 10px 10px;
+    
     border-bottom: 1.5px solid #D8D8D8;
     flex-wrap: wrap;
+    &:not(:first-child) {
+        padding-top: 15px;
+    }
 }
 
 .info {
@@ -28,8 +32,10 @@
 
 .keywords {
     border-bottom: 1.5px solid #D8D8D8;
+    padding: 10px 10px;
     .container {
         border: none;
+        padding: 0;
     }
     
     .bubbles {
@@ -38,10 +44,5 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: flex-start;
-        padding: 5px;
-        
-        & > * {
-            margin: 5px;
-        }
     }
 }
